@@ -12,6 +12,8 @@ public class GameCycle : MonoBehaviour
 {
     public static GameCycle obj;
     public int countKill;
+    [SerializeField] public PlayerControlTPS _player;
+    public Vector3 PlayerPosition { get { return _player.transform.position; } }
 
     public GameState state;
 
@@ -59,12 +61,10 @@ public class GameCycle : MonoBehaviour
     public void StartGame()
     {
         state = GameState.Play;
+        Enemy.IsEnemyDay += isDayEnemy;
     }
 
-    private UnityAction onEnemyDay()
-    {
-        return isDayEnemy;
-    }
+
 
 
     private void isDayEnemy()
@@ -74,7 +74,7 @@ public class GameCycle : MonoBehaviour
             TimeToInstNewEnemy -= stepSpeedDecrement;
 
         if (ShotCircle.transform.localScale.x < maxSize)
-            ShotCircle.transform.localScale += new Vector3(StepSpeedIncrementCircle, StepSpeedIncrementCircle, StepSpeedIncrementCircle); 
+            ShotCircle.transform.localScale += new Vector3(StepSpeedIncrementCircle, StepSpeedIncrementCircle, StepSpeedIncrementCircle);
         GameUI.gameUIObj.UpdScore(countKill);
     }
 
@@ -84,7 +84,7 @@ public class GameCycle : MonoBehaviour
     {
         GameObject enGO = Instantiate(EnemyPrefab, startPoints[UnityEngine.Random.Range(0, 1000) % startPoints.Count].transform.position, Quaternion.identity);
         Enemy enemy = enGO.GetComponent<Enemy>();
-        enemy.IsEnemyDay.AddListener(onEnemyDay());
+        //enemy.IsEnemyDay.AddListener(onEnemyDay());
     }
 
     private void InitShotCircle()

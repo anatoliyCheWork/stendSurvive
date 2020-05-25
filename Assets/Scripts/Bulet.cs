@@ -5,16 +5,51 @@ using UnityEngine;
 
 public class Bulet : MonoBehaviour
 {
+    //SerializeField
+    [SerializeField] private Rigidbody _body;
+    [SerializeField] private float _power = 25.0f;
+    [SerializeField] private float _destroyTime = 5.0f;
 
-    public Rigidbody body;
-    public float Power;
+
+    #region MonoBehaviour
     private void Awake()
     {
-        body = GetComponent<Rigidbody>();
+        _body = GetComponent<Rigidbody>();
     }
+
+    #endregion MonoBehaviour
 
     internal void Fire(Vector3 Force)
     {
-        body.AddForce((Force.normalized * Power), ForceMode.Impulse);
+        _body.AddForce((Force.normalized * _power), ForceMode.Impulse);
+        StartCoroutine(BulletDestroy());
     }
+
+    private IEnumerator BulletDestroy()
+    {
+        yield return new WaitForSeconds(_destroyTime);
+
+        Destroy(gameObject);
+    }
+
+    public float GetPower()
+    {
+        return _power;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        Enemy enemy;
+
+        other.TryGetComponent(out enemy);
+
+        if (enemy != null)
+        {
+            Debug.LogError(other.name);
+            enemy.ApplyDamage(_power);
+        }
+    }
+
+
 }

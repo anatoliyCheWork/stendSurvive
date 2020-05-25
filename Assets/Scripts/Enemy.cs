@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,24 +6,29 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    public UnityEvent IsEnemyDay;
+    // public
+    public static Action IsEnemyDay;
     public float healh = 1;
+
+    //private
     private NavMeshAgent agent;
 
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(Vector3.zero);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
-    private void LateUpdate()
+    private void Update()
     {
+        if (GameCycle.obj)
+            agent.SetDestination(GameCycle.obj.PlayerPosition);
+    }
+
+    public void ApplyDamage(float damage)
+    {
+
+        healh -= damage;
         if (healh <= 0)
         {
             DayThis();
@@ -31,10 +36,9 @@ public class Enemy : MonoBehaviour
     }
     private void DayThis()
     {
-        IsEnemyDay.Invoke();
-        healh = 1;
+        IsEnemyDay?.Invoke();
         gameObject.SetActive(false);
-        IsEnemyDay.RemoveAllListeners();
     }
+
 
 }
