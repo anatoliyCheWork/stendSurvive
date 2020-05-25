@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerControlTPS : MonoBehaviour 
 {
@@ -15,8 +16,14 @@ public class PlayerControlTPS : MonoBehaviour
 
     private Vector3 direction;
 
-	
-	void Awake()
+    [Header("Орудия")]
+    public List<GameObject> BulletPrefabs;
+    private int indCurrentBulletTypeL = 0;
+    private int indCurrentBulletTypeR = 0;
+    public Canon CanonL;
+    public Canon CanonR;
+
+    void Awake()
 	{
 		
     }
@@ -24,7 +31,22 @@ public class PlayerControlTPS : MonoBehaviour
 	void FixedUpdate()
 	{	
 		Rotation();
+        Shot();
 	}
+
+    void Shot()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject bulet = BulletPrefabs[indCurrentBulletTypeL];     
+            CanonL.Shot(bulet);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            GameObject bulet = BulletPrefabs[indCurrentBulletTypeL];
+            CanonR.Shot(bulet);
+        }
+    }
 
 	void Rotation() // вращение тела, отслеживание курсора
 	{
