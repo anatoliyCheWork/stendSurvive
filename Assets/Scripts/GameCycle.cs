@@ -30,7 +30,7 @@ public class GameCycle : MonoBehaviour
     [SerializeField] float minSize = 1;
     [SerializeField] float maxSize = 2;
     [SerializeField] float StepSpeedIncrementCircle = 0.01f;
-
+    
     void Start()
     {
         if (obj == null)
@@ -84,7 +84,7 @@ public class GameCycle : MonoBehaviour
     {
         GameObject enGO = Instantiate(EnemyPrefab, startPoints[UnityEngine.Random.Range(0, 1000) % startPoints.Count].transform.position, Quaternion.identity);
         Enemy enemy = enGO.GetComponent<Enemy>();
-        //enemy.IsEnemyDay.AddListener(onEnemyDay());
+        
     }
 
     private void InitShotCircle()
