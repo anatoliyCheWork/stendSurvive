@@ -12,25 +12,31 @@ public class GameCycle : MonoBehaviour
 {
     public static GameCycle obj;
     public int countKill;
+    [SerializeField] public PlayerControlTPS _player;
+    public Vector3 PlayerPosition { get { return _player.transform.position; } }
 
     public GameState state;
 
     public List<GameObject> startPoints;
 
-
+    [Header("EnemySetUp")]
     public float TimeToInstNewEnemy;
     public float minTimeToInstNewEnemy;
-    public float stepSpeedDecrement = 0.01f;
-
-
-    private float curTime;
-
+    [SerializeField] float stepSpeedDecrement = 0.01f;
     public GameObject EnemyPrefab;
+    private float curTime;
+    [Header("Shot Circle")]
+    [SerializeField] GameObject ShotCircle;
+    [SerializeField] float minSize = 1;
+    [SerializeField] float maxSize = 2;
+    [SerializeField] float StepSpeedIncrementCircle = 0.01f;
+    
     void Start()
     {
         if (obj == null)
             obj = this;
         state = GameState.Pause;
+        InitShotCircle();
     }
 
     void Update()
@@ -38,7 +44,6 @@ public class GameCycle : MonoBehaviour
         if (state == GameState.Play)
             Tick();
     }
-
 
     private void Tick()
     {
@@ -53,29 +58,38 @@ public class GameCycle : MonoBehaviour
         }
     }
 
-    internal void StartGame()
+    public void StartGame()
     {
         state = GameState.Play;
-    }
-
-    private UnityAction onEnemyDay()
-    {
-        return isDay;
+        Enemy.IsEnemyDay += isDayEnemy;
     }
 
 
-    private void isDay()
+
+
+    private void isDayEnemy()
     {
         countKill++;
         if (TimeToInstNewEnemy > minTimeToInstNewEnemy)
             TimeToInstNewEnemy -= stepSpeedDecrement;
+
+        if (ShotCircle.transform.localScale.x < maxSize)
+            ShotCircle.transform.localScale += new Vector3(StepSpeedIncrementCircle, StepSpeedIncrementCircle, StepSpeedIncrementCircle);
         GameUI.gameUIObj.UpdScore(countKill);
     }
 
+
+
     private void CreateNewEnemy()
     {
-        GameObject enGO = Instantiate(EnemyPrefab, startPoints[UnityEngine.Random.Range(0, 100) % startPoints.Count].transform.position, Quaternion.identity);
+        GameObject enGO = Instantiate(EnemyPrefab, startPoints[UnityEngine.Random.Range(0, 1000) % startPoints.Count].transform.position, Quaternion.identity);
         Enemy enemy = enGO.GetComponent<Enemy>();
-        enemy.IsEnemyDay.AddListener(onEnemyDay());
+        
     }
+
+    private void InitShotCircle()
+    {
+        ShotCircle.transform.localScale = new Vector3(minSize, minSize, minSize);
+    }
+
 }
