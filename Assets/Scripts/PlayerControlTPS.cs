@@ -43,15 +43,15 @@ public class PlayerControlTPS : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            GameObject bulet = BulletPrefabs[indCurrentBulletTypeL];
+            GameObject bulet = BulletPrefabs[indCurrentBulletTypeR];
             CanonR.Shot(bulet);
         }
     }
 
-	void Rotation() // вращение тела, отслеживание курсора
+	void Rotation() 
 	{
 		Vector3 lookPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y)) - transform.position;
-		lookPos.y = 0; // поворот в плоскости ХZ
+		lookPos.y = 0; 
 
 		if(useSmooth)
 		{
