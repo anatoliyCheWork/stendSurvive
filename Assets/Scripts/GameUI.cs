@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    public Screens _screens;
+
+
+
+
     public static GameUI gameUIObj;
 
     public Text Count;
@@ -31,7 +36,7 @@ public class GameUI : MonoBehaviour
     public void UpdBestScore()
     {
         string s = string.Format(DefaultBestText, PlayerPrefs.GetInt("score", 0));
-        Count.text = s;        
+        Count.text = s;
     }
 
     public void PlayClick()

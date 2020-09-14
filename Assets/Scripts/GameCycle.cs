@@ -30,19 +30,19 @@ public class GameCycle : MonoBehaviour
     [SerializeField] float minSize = 1;
     [SerializeField] float maxSize = 2;
     [SerializeField] float StepSpeedIncrementCircle = 0.01f;
-    
+
     void Start()
     {
         if (obj == null)
             obj = this;
-        state = GameState.Pause;
-        InitShotCircle();
+        //state = GameState.Pause;
+        //InitShotCircle();
     }
 
     void Update()
     {
-        if (state == GameState.Play)
-            Tick();
+        // if (state == GameState.Play)
+        //     Tick();
     }
 
     private void Tick()
@@ -84,7 +84,7 @@ public class GameCycle : MonoBehaviour
     {
         GameObject enGO = Instantiate(EnemyPrefab, startPoints[UnityEngine.Random.Range(0, 1000) % startPoints.Count].transform.position, Quaternion.identity);
         Enemy enemy = enGO.GetComponent<Enemy>();
-        
+
     }
 
     private void InitShotCircle()
