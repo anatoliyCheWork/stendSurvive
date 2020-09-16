@@ -701,6 +701,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3069989764936068741, guid: 802a240a39c3220439f4b56d422eb75e,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 1847
+      objectReference: {fileID: 0}
     - target: {fileID: 3069989764936068742, guid: 802a240a39c3220439f4b56d422eb75e,
         type: 3}
       propertyPath: m_Name
