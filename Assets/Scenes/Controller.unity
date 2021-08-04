@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 3e96df00419202c40a1314ebbc0a70a4, type: 2}
 --- !u!114 &65913602
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -639,6 +639,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2114283753834967213}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1131896116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1131896118}
+  - component: {fileID: 1131896117}
+  m_Layer: 0
+  m_Name: GameCycle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1131896117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131896116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33524f9ce0ed0e84993712409c5c5571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countKill: 0
+  _player: {fileID: 3893294199639930361}
+  state: 0
+  startPoints: []
+  TimeToInstNewEnemy: 0
+  minTimeToInstNewEnemy: 0
+  stepSpeedDecrement: 0.01
+  EnemyPrefab: {fileID: 6967071620835983893, guid: db14c4ab8cb6e394c885d494d27c8d7d, type: 3}
+--- !u!4 &1131896118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131896116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.01050055, y: 0.7934604, z: -0.5659597}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1764214107
 GameObject:

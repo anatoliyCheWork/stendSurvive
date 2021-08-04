@@ -12,7 +12,7 @@ public class GameCycle : MonoBehaviour
 {
     public static GameCycle obj;
     public int countKill;
-    [SerializeField] public PlayerControlTPS _player;
+    [SerializeField] public Transform _player;
     public Vector3 PlayerPosition { get { return _player.transform.position; } }
 
     public GameState state;
@@ -25,11 +25,11 @@ public class GameCycle : MonoBehaviour
     [SerializeField] float stepSpeedDecrement = 0.01f;
     public GameObject EnemyPrefab;
     private float curTime;
-    [Header("Shot Circle")]
-    [SerializeField] private GameObject ShotCircle;
-    [SerializeField] private float minSize = 1;
-    [SerializeField] private float maxSize = 2;
-    [SerializeField] private float StepSpeedIncrementCircle = 0.01f;
+   // [Header("Shot Circle")]
+    //[SerializeField] private GameObject ShotCircle;
+    //[SerializeField] private float minSize = 1;
+    //[SerializeField] private float maxSize = 2;
+    //[SerializeField] private float StepSpeedIncrementCircle = 0.01f;
 
     void Start()
     {
@@ -41,8 +41,8 @@ public class GameCycle : MonoBehaviour
 
     void Update()
     {
-        // if (state == GameState.Play)
-        //     Tick();
+        if (state == GameState.Play)
+            Tick();
     }
 
     private void Tick()
@@ -73,9 +73,9 @@ public class GameCycle : MonoBehaviour
         if (TimeToInstNewEnemy > minTimeToInstNewEnemy)
             TimeToInstNewEnemy -= stepSpeedDecrement;
 
-        if (ShotCircle.transform.localScale.x < maxSize)
-            ShotCircle.transform.localScale += new Vector3(StepSpeedIncrementCircle, StepSpeedIncrementCircle, StepSpeedIncrementCircle);
-        GameUI.gameUIObj.UpdScore(countKill);
+        //if (ShotCircle.transform.localScale.x < maxSize)
+        //    ShotCircle.transform.localScale += new Vector3(StepSpeedIncrementCircle, StepSpeedIncrementCircle, StepSpeedIncrementCircle);
+        //GameUI.gameUIObj.UpdScore(countKill);
     }
 
 
@@ -87,9 +87,9 @@ public class GameCycle : MonoBehaviour
 
     }
 
-    private void InitShotCircle()
-    {
-        ShotCircle.transform.localScale = new Vector3(minSize, minSize, minSize);
-    }
+    //private void InitShotCircle()
+    //{
+    //    ShotCircle.transform.localScale = new Vector3(minSize, minSize, minSize);
+    //}
 
 }
