@@ -7,6 +7,8 @@ public class InputSystem : MonoBehaviour
     public Vector2 move;
     public Vector2 look;
     public bool jump;
+    public bool _shotR;
+    public bool _shotL;
     public bool sprint;
 
     [Header("Movement Settings")]
@@ -24,6 +26,24 @@ public class InputSystem : MonoBehaviour
         MoveInput(value.Get<Vector2>());
     }
 
+    public void OnShotRInput(InputValue value)
+    {
+        ShotRInput(value.isPressed);
+    }
+    public void ShotRInput(bool shotR)
+    {
+        _shotR = shotR;
+    }
+
+    public void OnShotLInput(InputValue value)
+    {
+        ShotLInput(value.isPressed);
+    }
+
+    public void ShotLInput(bool shotL)
+    {
+        _shotL = shotL;
+    }
     public void OnLook(InputValue value)
     {
         if (cursorInputForLook)

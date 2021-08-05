@@ -65,23 +65,13 @@ public class TopDownController : MonoBehaviour
 
     // timeout deltatime
     private float _jumpTimeoutDelta;
-    private float _fallTimeoutDelta;
+    [SerializeField] private float _fallTimeoutDelta;
 
-    // animation IDs
-    private int _animIDSpeed;
-    private int _animIDGrounded;
-    private int _animIDJump;
-    private int _animIDFreeFall;
-    private int _animIDMotionSpeed;
-
-    private Animator _animator;
     private CharacterController _controller;
     private InputSystem _input;
     private GameObject _mainCamera;
 
     private const float _threshold = 0.01f;
-
-    private bool _hasAnimator;
 
     private void Awake()
     {
@@ -94,21 +84,15 @@ public class TopDownController : MonoBehaviour
 
     private void Start()
     {
-        _hasAnimator = TryGetComponent(out _animator);
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<InputSystem>();
 
-        AssignAnimationIDs();
-
-        // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
     }
 
     private void Update()
     {
-        _hasAnimator = TryGetComponent(out _animator);
-
         JumpAndGravity();
         GroundedCheck();
         Move();
@@ -119,26 +103,11 @@ public class TopDownController : MonoBehaviour
         CameraRotation();
     }
 
-    private void AssignAnimationIDs()
-    {
-        _animIDSpeed = Animator.StringToHash("Speed");
-        _animIDGrounded = Animator.StringToHash("Grounded");
-        _animIDJump = Animator.StringToHash("Jump");
-        _animIDFreeFall = Animator.StringToHash("FreeFall");
-        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-    }
-
     private void GroundedCheck()
     {
         // set sphere position, with offset
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-        Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
-
-        // update animator if using character
-        if (_hasAnimator)
-        {
-            _animator.SetBool(_animIDGrounded, Grounded);
-        }
+        Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);        
     }
 
     private void CameraRotation()
@@ -210,13 +179,6 @@ public class TopDownController : MonoBehaviour
 
         // move the player
         _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
-        // update animator if using character
-        if (_hasAnimator)
-        {
-            _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-        }
     }
 
     private void JumpAndGravity()
@@ -225,13 +187,6 @@ public class TopDownController : MonoBehaviour
         {
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
-
-            // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDJump, false);
-                _animator.SetBool(_animIDFreeFall, false);
-            }
 
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
@@ -245,11 +200,6 @@ public class TopDownController : MonoBehaviour
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
-                // update animator if using character
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, true);
-                }
             }
 
             // jump timeout
@@ -268,15 +218,6 @@ public class TopDownController : MonoBehaviour
             {
                 _fallTimeoutDelta -= Time.deltaTime;
             }
-            else
-            {
-                // update animator if using character
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDFreeFall, true);
-                }
-            }
-
             // if we are not grounded, do not jump
             _input.jump = false;
         }
